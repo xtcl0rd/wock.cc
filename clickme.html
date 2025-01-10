@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recently Played on Spotify</title>
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #fff;
+        }
+
+        button {
+            background-color: #1DB954;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #1ED760;
+        }
+
+        /* Spotify Modal */
+        .spotify-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .modal-content {
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 8px;
+            text-align: center;
+            position: relative;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #fff;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        #recently-played-tracks {
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .track {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            background-color: #282828;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .track img {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+
+        .track div {
+            flex: 1;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateY(-50%);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Button to open the modal -->
+    <button id="open-spotify-modal">Show Recently Played</button>
+
+    <!-- Spotify Modal (Initially Hidden) -->
+    <div id="spotify-modal" class="spotify-modal">
+        <div class="modal-content">
+            <span id="close-modal" class="close">&times;</span>
+            <h2>Recently Played Tracks</h2>
+            <div id="recently-played-tracks">
+                <div id="loading">Loading...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Button to open the modal
+        document.getElementById('open-spotify-modal').addEventListener('click', function () {
+            document.getElementById('spotify-modal').style.display = 'flex';
+            fetchRecentlyPlayed();
+        });
+
+        // Button to close the modal
+        document.getElementById('close-modal').addEventListener('click', function () {
+            document.getElementById('spotify-modal').style.display = 'none';
+        });
+
+        // Fetch Recently Played Tracks (No Login Required)
+        function fetchRecentlyPlayed() {
+            // Spotify's public playlist API or your custom playlist API
+            const playlistId = 'YOUR_SPOTIFY_PLAYLIST_ID'; // Replace with actual public playlist ID
+            const API_URL = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`;
+
+            // Make an API request to Spotify
+            fetch(API_URL, {
+                    headers: {
+                        'Authorization': 'Bearer YOUR_ACCESS_TOKEN' // Replace with a valid token or use public data
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const tracksContainer = document.getElementById('recently-played-tracks');
+                    tracksContainer.innerHTML = ''; // Clear the loading text
+
+                    // Loop through tracks and display them
+                    data.items.forEach(item => {
+                        const track = item.track;
+                        const trackElement = document.createElement('div');
+                        trackElement.classList.add('track');
+                        trackElement.innerHTML = `
+                            <img src="${track.album.images[0].url}" alt="${track.name}">
+                            <div>
+                                <strong>${track.name}</strong>
+                                <p>by ${track.artists.map(artist => artist.name).join(', ')}</p>
+                                <p>from the album: ${track.album.name}</p>
+                            </div>
+                        `;
+                        tracksContainer.appendChild(trackElement);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching tracks:', error);
+                    document.getElementById('recently-played-tracks').innerHTML = 'Failed to load tracks.';
+                });
+        }
+    </script>
+</body>
+
+</html>

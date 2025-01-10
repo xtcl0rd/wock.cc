@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Litecoin Donation</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .modal {
+            background: #1a1a1a;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            width: 350px;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal h1 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .modal select, .modal input, .modal button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            background: #2c2c2c;
+            color: #fff;
+        }
+
+        .modal button {
+            background: #ff4500;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .modal button:hover {
+            background: #ff5722;
+        }
+
+        .payment-details {
+            margin-top: 20px;
+        }
+
+        .payment-details img {
+            width: 150px;
+            height: 150px;
+            margin: 10px auto;
+            display: block;
+            border: 2px solid #444;
+            border-radius: 5px;
+        }
+
+        .payment-details .info {
+            background: #2c2c2c;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .info span {
+            word-break: break-word;
+        }
+
+        .info button {
+            background: #444;
+            border: none;
+            padding: 5px;
+            border-radius: 3px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .info button:hover {
+            background: #555;
+        }
+
+        .modal .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+
+        .modal .close:hover {
+            color: #ff4500;
+        }
+
+        .waiting {
+            color: #ffaa00;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="modal">
+        <button class="close">&times;</button>
+        <h1>Make a Donation</h1>
+        <select>
+            <option value="ltc">Litecoin (LTC)</option>
+            <option value="btc">Bitcoin (BTC)</option>
+            <option value="eth">Ethereum (ETH)</option>
+        </select>
+        <input type="text" placeholder="Amount in USD (min $30)">
+        <button>Proceed to Payment</button>
+        <div class="payment-details">
+            <h1>Payment Details</h1>
+            <img src="QR_CODE_IMAGE_URL" alt="Litecoin QR Code">
+            <div class="info">
+                <span>Amount: 0.01224394 LTC</span>
+                <button>Copy</button>
+            </div>
+            <div class="info">
+                <span>Address: LITECOIN_ADDRESS_HERE</span>
+                <button>Copy</button>
+            </div>
+            <p class="waiting">Waiting for payment...</p>
+        </div>
+    </div>
+</body>
+</html>
