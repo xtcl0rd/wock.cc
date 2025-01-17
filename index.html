@@ -16,8 +16,75 @@
     <link rel="icon" sizes="192x192" href="assets/images/android-chrome-192x192.png" type="image/png">
     <link rel="icon" sizes="512x512" href="assets/images/android-chrome-512x512.png" type="image/png">
     <link rel="stylesheet" href="assets/stylesheets/audio-control.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>xtc</title>
     <style>
+
+     /* Glowing Text */
+     .glow-sprinkle {
+        font-size: 24px;
+        margin-bottom: 0;
+        font-weight: 400;
+        color: #ffffff;
+        text-align: center;
+        text-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 30px #ffffff, 0 0 40px #ffffff, 0 0 50px #ffffff, 0 0 60px #ffffff;
+        position: relative;
+    }
+
+
+    /* Particle Animation */
+    @keyframes sparkle {
+        0% {
+            transform: translate(0, 0) scale(0.5);
+            opacity: 1;
+        }
+        50% {
+            transform: translate(calc(var(--x) * 10px), calc(var(--y) * 10px)) scale(1);
+            opacity: 0.7;
+        }
+        100% {
+            transform: translate(0, 0) scale(0.5);
+            opacity: 0;
+        }
+    }
+
+    /* View Counter Styles */
+    #view-counter {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        padding: 10px 15px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-family: Arial, sans-serif;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        z-index: 1000;
+        animation: fadeIn 1s ease;
+    }
+
+    #view-counter span {
+        margin-right: 8px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    #view-counter i {
+        font-size: 16px;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
         .profile-picture {
             display: flex;
             justify-content: center;
@@ -168,7 +235,8 @@
                 <img src="assets/images/profile-pic.png" alt="Profile Picture">
             </div>
 
-            <h1 style="font-size: 24px; margin-bottom: 0; font-weight: 400;">xtc</h1>
+            <h1 class="glow-sprinkle">xtc</h1>
+
 
             <!-- Typewriter Text -->
             <div class="typewriter-container">
@@ -181,7 +249,7 @@
                 <a href="https://discord.com/users/1307723250251464815" target="_blank" aria-label="discord @ cu4p"><i class="fa-brands discord"></i></a>
                 <a href="https://t.me/unstatistic" target="_blank" aria-label="telegram @ unstatistic"><i class="fa-brands telegram"></i></a>
                 <a href="https://github.com/xtcl0rd" target="_blank" aria-label="github @ xtcl0rd"><i class="fa-brands github"></i></a>
-                <a href="https://discord.gg/u9WhwDQqt9" target="_blank" aria-label="discord @ Xtc Stock"><i class="fa-brands discord"></i></a>
+                <a href="https://www.instagram.com/xtc2rich" target="_blank" aria-label="Instagram @ Xtc2rich"><i class="fa-brands instagram"></i></a>
             </div>
 
             <!-- Click Me Button -->
@@ -202,11 +270,98 @@
         </div>
     </div>
 
+
+
+
+    <div id="view-counter">
+        <span id="view-count">734</span>
+        <i class="fa fa-eye" aria-hidden="true"></i>
+    </div>
+    
+    
+
     <footer style="padding: 16px; display: flex; justify-content: center;"></footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="assets/js/overlay.js"></script>
     <script src="assets/js/mute-button.js"></script>
+    <script>
+        const viewCounter = document.getElementById("view-count");
+    
+        // Check if the 'views' key exists in localStorage
+        let views = parseInt(localStorage.getItem("views")) || 734; // Start at 734 if no views are stored
+    
+        // Increment and update the counter
+        views++;
+        localStorage.setItem("views", views);
+        viewCounter.textContent = views;
+</script>
+
+<script>
+// Projects Modal Logic
+const projectsBtn = document.getElementById("projects-btn");
+const projectsModal = document.getElementById("projects-modal");
+const closeProjectsModal = document.getElementById("close-projects-modal");
+
+projectsBtn.addEventListener("click", () => {
+    projectsModal.style.display = "flex";
+    displayProjects();
+});
+
+closeProjectsModal.addEventListener("click", () => {
+    projectsModal.style.display = "none";
+});
+
+function displayProjects() {
+    const projects = [
+        {
+            title: "Oriun",
+            description: "Minecraft alt store, used to be with balance but it's W.I.P so we can make it ad based.",
+            image: "https://iili.io/2r746W7.th.jpg",
+            url: "https://example.com/oriun",
+            tags: ["React", "TypeScript", "Tailwind"]
+        },
+        {
+            title: "OriunSMM",
+            description: "SMM service, based on Oriun.",
+            image: "https://iili.io/2r746W7.th.jpg",
+            url: "https://example.com/oriunsmm",
+            tags: ["Next.js", "Node.js", "MongoDB"]
+        },
+        {
+            title: "Modern Biolink",
+            description: "A more modern biolink, not too similar to other ones like guns.lol.",
+            image: "https://iili.io/2r746W7.th.jpg",
+            url: "https://example.com/modernbiolink",
+            tags: ["HTML", "CSS", "JavaScript"]
+        },
+        {
+            title: "EinfachCTF",
+            description: "Secure mailserver meant to be used by businesses or privacy-concerned people.",
+            image: "https://iili.io/2r746W7.th.jpg",
+            url: "https://example.com/einfachctf",
+            tags: ["Mailserver", "Python", "Encryption"]
+        }
+    ];
+
+    const projectsList = document.getElementById("projects-list");
+    projectsList.innerHTML = ""; // Clear previous projects
+
+    projects.forEach(project => {
+        const projectDiv = document.createElement("div");
+        projectDiv.classList.add("project");
+        projectDiv.innerHTML = `
+            <img src="${project.image}" alt="${project.title}" onclick="window.open('${project.url}', '_blank')">
+            <h3>${project.title}</h3>
+            <p>${project.description}</p>
+            <div class="tags">
+                ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}
+            </div>
+        `;
+        projectsList.appendChild(projectDiv);
+    });
+}
+</script>
     <script>
         // Spotify Modal Logic
         const clickMeButton = document.getElementById("click-me-btn");
