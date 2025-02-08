@@ -1,12 +1,413 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="refresh" content="0; url=https://guns.lol/bands">
-  <title>Redirecting...</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="xtc's Biolink">
+    <meta name="keywords" content="xtc, money, grinder, biolink">
+    <link rel="stylesheet" href="assets/stylesheets/icons.css">
+    <link rel="stylesheet" href="assets/stylesheets/style.css">
+    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" sizes="32x32" href="assets/images/favicon-32x32.png" type="image/png">
+    <link rel="icon" sizes="16x16" href="assets/images/favicon-16x16.png" type="image/png">
+    <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png" type="image/png">
+    <link rel="icon" sizes="192x192" href="assets/images/android-chrome-192x192.png" type="image/png">
+    <link rel="icon" sizes="512x512" href="assets/images/android-chrome-512x512.png" type="image/png">
+    <link rel="stylesheet" href="assets/stylesheets/audio-control.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>xtc</title>
+    
+    <style>
+
+     /* Glowing Text */
+     .glow-sprinkle {
+        font-size: 24px;
+        margin-bottom: 0;
+        font-weight: 400;
+        color: #ffffff;
+        text-align: center;
+        text-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 30px #ffffff, 0 0 40px #ffffff, 0 0 50px #ffffff, 0 0 60px #ffffff;
+        position: relative;
+    }
+
+
+    /* Particle Animation */
+    @keyframes sparkle {
+        0% {
+            transform: translate(0, 0) scale(0.5);
+            opacity: 1;
+        }
+        50% {
+            transform: translate(calc(var(--x) * 10px), calc(var(--y) * 10px)) scale(1);
+            opacity: 0.7;
+        }
+        100% {
+            transform: translate(0, 0) scale(0.5);
+            opacity: 0;
+        }
+    }
+
+    /* View Counter Styles */
+    #view-counter {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        padding: 10px 15px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-family: Arial, sans-serif;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        z-index: 1000;
+        animation: fadeIn 1s ease;
+    }
+
+    #view-counter span {
+        margin-right: 8px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    #view-counter i {
+        font-size: 16px;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+        .profile-picture {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .profile-picture img {
+            width: 100px; /* Ensuring the size is 100x100px */
+            height: 100px;
+            border-radius: 50%; /* Circular shape */
+            border: 2px solid #e5ebf1; /* Light border around the image */
+        }
+
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #fff;
+        }
+
+        /* Link Button Styles */
+        .lnk {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            display: block;
+            width: 200px;
+            margin: 10px auto; /* Center-align the button */
+        }
+
+        .lnk:hover {
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        /* Spotify Modal Styles */
+        .spotify-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 8px;
+            text-align: center;
+            position: relative;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #fff;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        #recently-played-tracks {
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .track {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            background-color: #282828;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .track img {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+
+        .track div {
+            flex: 1;
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateY(-50%);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+    </style>
 </head>
+
 <body>
-  <p>If you are not redirected automatically, <a href="https://guns.lol/bands">click here</a>.</p>
+    <div id="overlay">
+        <p><i>Click to Enter</i></p>
+    </div>
+
+
+
+    <video autoplay loop muted id="background-video">
+        <source src="https://pouch.jumpshare.com/preview/sXP1vKCPXSDJhojN5ZBQNuxz_QVDFop53Zndtlzi5DIXnC3XK4C7NVk5PnRnKfnRF0XLC-8IGSImmBjms9ano19IEUN467Axefitsrhd_lNXviWP0nEJ3A45VKrfvvJKdnyhT0tcKASd3PyN_74Ucm6yjbN-I2pg_cnoHs_AmgI.mp4" type="video/mp4">
+    </video>
+
+    <div class="audio-control">
+        <button id="mute-button" aria-label="Mute"></button>
+        <div class="slider-container">
+            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
+        </div>
+    </div>
+
+    <header id="entrypoint">
+        <nav>
+            <div style="display: flex; align-items: center; padding: 30px 10%; flex-wrap: wrap;">
+                <span style="margin-right: auto;">xtc</span>
+            </div>
+        </nav>
+    </header>
+
+    <section>
+        <div class="g">
+            <div class="profile-picture">
+                <img src="assets/images/profile-pic.png" alt="Profile Picture">
+            </div>
+
+            <h1 class="glow-sprinkle">xtc</h1>
+
+
+            <!-- Typewriter Text -->
+            <div class="typewriter-container">
+                <div id="typewriter" class="typewriter-text"></div>
+            </div>
+
+            <div id="line" style="border-bottom: 1px solid #ffffff; max-width: 285px; margin: 16px; width: 100%;"></div>
+
+            <div style="flex-wrap: wrap; display: flex; margin: 0;">
+                <a href="https://discord.gg/strivex" target="_blank" aria-label="discord @ cu4p"><i class="fa-brands discord"></i></a>
+                <a href="https://t.me/unstatistic" target="_blank" aria-label="telegram @ unstatistic"><i class="fa-brands telegram"></i></a>
+                <a href="https://github.com/xtcl0rd" target="_blank" aria-label="github @ xtcl0rd"><i class="fa-brands github"></i></a>
+                <a href="https://www.instagram.com/xtc2rich" target="_blank" aria-label="Instagram @ Xtc2rich"><i class="fa-brands instagram"></i></a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Spotify Modal -->
+    <div id="spotify-modal" class="spotify-modal">
+        <div class="modal-content">
+            <span id="close-spotify-modal" class="close">×</span>
+            <h2>Recently Played Tracks</h2>
+            <div id="recently-played-tracks">
+                <!-- Spotify tracks will be injected here -->
+            </div>
+        </div>
+    </div>
+    
+
+
+    <div id="view-counter">
+        <span id="view-count">734</span>
+        <i class="fa fa-eye" aria-hidden="true"></i>
+    </div>
+    
+    
+
+    <footer style="padding: 16px; display: flex; justify-content: center;"></footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="assets/js/overlay.js"></script>
+    <script src="assets/js/mute-button.js"></script>
+    <script>
+        const viewCounter = document.getElementById("view-count");
+    
+        // Check if the 'views' key exists in localStorage
+        let views = parseInt(localStorage.getItem("views")) || 734; // Start at 734 if no views are stored
+    
+        // Increment and update the counter
+        views++;
+        localStorage.setItem("views", views);
+        viewCounter.textContent = views;
+</script>
+
+
+<script>
+    const hoverBox = document.querySelector('.hover-box');
+
+hoverBox.addEventListener('mousemove', (e) => {
+    const rect = hoverBox.getBoundingClientRect();
+    const x = e.clientX - rect.left; // Mouse X position within the box
+    const y = e.clientY - rect.top;  // Mouse Y position within the box
+
+    // Update the background position based on mouse movement
+    hoverBox.style.setProperty('--mouse-x', `${x}px`);
+    hoverBox.style.setProperty('--mouse-y', `${y}px`);
+});
+
+</script>
+    <script>
+        // Spotify Modal Logic
+        const clickMeButton = document.getElementById("click-me-btn");
+        const spotifyModal = document.getElementById("spotify-modal");
+        const closeSpotifyModal = document.getElementById("close-spotify-modal");
+
+        clickMeButton.addEventListener("click", () => {
+            spotifyModal.style.display = "flex";
+            displaySpotifyTracks();
+        });
+
+        closeSpotifyModal.addEventListener("click", () => {
+            spotifyModal.style.display = "none";
+        });
+
+        function displaySpotifyTracks() {
+            const tracks = [
+                { name: "Cailfn", artist: "Good guy, known him for 3 years now.", image: "https://iili.io/2r7S54j.jpg" },
+                { name: "25", artist: "Rod Wave", image: "https://iili.io/2r7rACX.jpg" },
+                { name: "Yayo Connect", artist: "Knaller", image: "https://iili.io/2r746W7.th.jpg" },
+            ];
+            const trackList = document.getElementById("recently-played-tracks");
+            trackList.innerHTML = ''; // Clear previous tracks
+            tracks.forEach(track => {
+                const trackDiv = document.createElement("div");
+                trackDiv.classList.add("track");
+                trackDiv.innerHTML = `
+                    <img src="${track.image}" alt="${track.name}">
+                    <div>
+                        <h4>${track.name}</h4>
+                        <p>${track.artist}</p>
+                    </div>
+                `;
+                trackList.appendChild(trackDiv);
+            });
+        }
+
+        // Typewriter effect
+        const typewriterElement = document.getElementById("typewriter");
+        const textLines = [
+            "trippin on double percs",
+            "bitches aint shit but hoes",
+            "fucking thots is my main hobby"
+        ];
+
+        let currentLine = 0;
+        let currentText = "";
+        let isDeleting = false;
+        let textIndex = 0;
+
+        function typeWriter() {
+            if (currentLine < textLines.length) {
+                if (isDeleting) {
+                    currentText = textLines[currentLine].substring(0, textIndex);
+                    textIndex--;
+                } else {
+                    currentText = textLines[currentLine].substring(0, textIndex);
+                    textIndex++;
+                }
+                typewriterElement.textContent = currentText;
+
+                if (!isDeleting && textIndex === textLines[currentLine].length) {
+                    setTimeout(() => {
+                        isDeleting = true;
+                    }, 1500);
+                } else if (isDeleting && textIndex === 0) {
+                    isDeleting = false;
+                    currentLine++;
+
+                    // Restart the typewriter from the first line
+                    if (currentLine === textLines.length) {
+                        currentLine = 0;
+                    }
+                }
+
+                setTimeout(typeWriter, isDeleting ? 100 : 150);
+            }
+        }
+
+        typeWriter();
+
+        
+    </script>
+    <script>
+        // Disable "View Page Source" (Ctrl+U)
+        document.addEventListener("keydown", function(event) {
+            if (event.ctrlKey && event.key === "u") {
+                event.preventDefault();
+                alert("woW uR So PrO HaKeR");
+            }
+        });
+        
+        // Disable Right Click (Optional)
+        document.addEventListener("contextmenu", function(event) {
+            event.preventDefault();
+        });
+        
+        // Console Message
+        console.log("%cwoW uR So PrO HaKeR", "color: white; background: black; font-size: 20px; padding: 10px;");
+        </script>
+        
 </body>
+
 </html>
