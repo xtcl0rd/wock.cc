@@ -211,7 +211,7 @@
 
 
     <video autoplay loop muted id="background-video">
-        <source src="https://pouch.jumpshare.com/preview/sXP1vKCPXSDJhojN5ZBQNuxz_QVDFop53Zndtlzi5DIXnC3XK4C7NVk5PnRnKfnRF0XLC-8IGSImmBjms9ano19IEUN467Axefitsrhd_lNXviWP0nEJ3A45VKrfvvJKdnyhT0tcKASd3PyN_74Ucm6yjbN-I2pg_cnoHs_AmgI.mp4" type="video/mp4">
+        <source src="https://cdn.discordapp.com/attachments/1318383669517357129/1338140472371318824/SAKURA_-_2_4K-00.50.05.469-00.51.34.693-00.00.00.000-00.01.26.632.mp4?ex=67a9ffee&is=67a8ae6e&hm=5a55d810ef258313d224917a96ef7e3c7a9d3591dd162d087c39fd9228dd5720&" type="video/mp4">
     </video>
 
     <div class="audio-control">
@@ -249,165 +249,27 @@
                 <a href="https://discord.gg/strivex" target="_blank" aria-label="discord @ cu4p"><i class="fa-brands discord"></i></a>
                 <a href="https://t.me/unstatistic" target="_blank" aria-label="telegram @ unstatistic"><i class="fa-brands telegram"></i></a>
                 <a href="https://github.com/xtcl0rd" target="_blank" aria-label="github @ xtcl0rd"><i class="fa-brands github"></i></a>
-                <a href="https://www.instagram.com/xtc2rich" target="_blank" aria-label="Instagram @ Xtc2rich"><i class="fa-brands instagram"></i></a>
+                <a href="https://x.com/xtcc_" target="_blank" aria-label="Twitter / X @ xtcc_"><i class="fa-brands twitter"></i></a>
             </div>
 
         </div>
     </section>
 
-    <!-- Spotify Modal -->
-    <div id="spotify-modal" class="spotify-modal">
-        <div class="modal-content">
-            <span id="close-spotify-modal" class="close">×</span>
-            <h2>Recently Played Tracks</h2>
-            <div id="recently-played-tracks">
-                <!-- Spotify tracks will be injected here -->
-            </div>
-        </div>
-    </div>
-    
-
-
     <div id="view-counter">
         <span id="view-count">734</span>
         <i class="fa fa-eye" aria-hidden="true"></i>
     </div>
-    
-    
 
     <footer style="padding: 16px; display: flex; justify-content: center;"></footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="assets/js/overlay.js"></script>
     <script src="assets/js/mute-button.js"></script>
-    <script>
-        const viewCounter = document.getElementById("view-count");
+    <script src="assets/js/viewschart.js"></script>
+    <script src="assets/js/brea.js"></script>
+    <script src="assets/js/hoverbox.js"></script>
+
     
-        // Check if the 'views' key exists in localStorage
-        let views = parseInt(localStorage.getItem("views")) || 734; // Start at 734 if no views are stored
-    
-        // Increment and update the counter
-        views++;
-        localStorage.setItem("views", views);
-        viewCounter.textContent = views;
-</script>
-
-
-<script>
-    const hoverBox = document.querySelector('.hover-box');
-
-hoverBox.addEventListener('mousemove', (e) => {
-    const rect = hoverBox.getBoundingClientRect();
-    const x = e.clientX - rect.left; // Mouse X position within the box
-    const y = e.clientY - rect.top;  // Mouse Y position within the box
-
-    // Update the background position based on mouse movement
-    hoverBox.style.setProperty('--mouse-x', `${x}px`);
-    hoverBox.style.setProperty('--mouse-y', `${y}px`);
-});
-
-</script>
-    <script>
-        // Spotify Modal Logic
-        const clickMeButton = document.getElementById("click-me-btn");
-        const spotifyModal = document.getElementById("spotify-modal");
-        const closeSpotifyModal = document.getElementById("close-spotify-modal");
-
-        clickMeButton.addEventListener("click", () => {
-            spotifyModal.style.display = "flex";
-            displaySpotifyTracks();
-        });
-
-        closeSpotifyModal.addEventListener("click", () => {
-            spotifyModal.style.display = "none";
-        });
-
-        function displaySpotifyTracks() {
-            const tracks = [
-                { name: "Cailfn", artist: "Good guy, known him for 3 years now.", image: "https://iili.io/2r7S54j.jpg" },
-                { name: "25", artist: "Rod Wave", image: "https://iili.io/2r7rACX.jpg" },
-                { name: "Yayo Connect", artist: "Knaller", image: "https://iili.io/2r746W7.th.jpg" },
-            ];
-            const trackList = document.getElementById("recently-played-tracks");
-            trackList.innerHTML = ''; // Clear previous tracks
-            tracks.forEach(track => {
-                const trackDiv = document.createElement("div");
-                trackDiv.classList.add("track");
-                trackDiv.innerHTML = `
-                    <img src="${track.image}" alt="${track.name}">
-                    <div>
-                        <h4>${track.name}</h4>
-                        <p>${track.artist}</p>
-                    </div>
-                `;
-                trackList.appendChild(trackDiv);
-            });
-        }
-
-        // Typewriter effect
-        const typewriterElement = document.getElementById("typewriter");
-        const textLines = [
-            "trippin on double percs",
-            "bitches aint shit but hoes",
-            "fucking thots is my main hobby"
-        ];
-
-        let currentLine = 0;
-        let currentText = "";
-        let isDeleting = false;
-        let textIndex = 0;
-
-        function typeWriter() {
-            if (currentLine < textLines.length) {
-                if (isDeleting) {
-                    currentText = textLines[currentLine].substring(0, textIndex);
-                    textIndex--;
-                } else {
-                    currentText = textLines[currentLine].substring(0, textIndex);
-                    textIndex++;
-                }
-                typewriterElement.textContent = currentText;
-
-                if (!isDeleting && textIndex === textLines[currentLine].length) {
-                    setTimeout(() => {
-                        isDeleting = true;
-                    }, 1500);
-                } else if (isDeleting && textIndex === 0) {
-                    isDeleting = false;
-                    currentLine++;
-
-                    // Restart the typewriter from the first line
-                    if (currentLine === textLines.length) {
-                        currentLine = 0;
-                    }
-                }
-
-                setTimeout(typeWriter, isDeleting ? 100 : 150);
-            }
-        }
-
-        typeWriter();
-
-        
-    </script>
-    <script>
-        // Disable "View Page Source" (Ctrl+U)
-        document.addEventListener("keydown", function(event) {
-            if (event.ctrlKey && event.key === "u") {
-                event.preventDefault();
-                alert("woW uR So PrO HaKeR");
-            }
-        });
-        
-        // Disable Right Click (Optional)
-        document.addEventListener("contextmenu", function(event) {
-            event.preventDefault();
-        });
-        
-        // Console Message
-        console.log("%cwoW uR So PrO HaKeR", "color: white; background: black; font-size: 20px; padding: 10px;");
-        </script>
-        
 </body>
 
 </html>
